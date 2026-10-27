@@ -1,7 +1,15 @@
 import { createServer } from 'node:http';
+import { handleApi } from './api.ts';
+import { ReportStore } from './reports.ts';
+import type { ReportStoreOptions } from './reports.ts';
 
-export function createApp() {
-  return createServer((request, response) => {
+export function createApp(options: ReportStoreOptions = {}) {
+  const store = new ReportStore(options);
+  return createServer({ requestTimeout: 15000, headersTimeout: 10000 }, (request, response) => {
+    if ((request.url ?? '').startsWith('/api/')) {
+      void handleApi(request, response, store);
+      return;
+    }
     response.setHeader('Content-Type', 'application/json; charset=utf-8');
 
     const path = (request.url ?? '/').split('?')[0];
@@ -19,7 +27,7 @@ export function createApp() {
     } else {
       payload = path === '/health'
         ? { status: 'ok' }
-        : { name: 'RivalScope', status: 'starter' };
+        : { name: 'RivalScope', status: 'research-api', capabilities: '/api/capabilities' };
     }
 
     response.statusCode = statusCode;

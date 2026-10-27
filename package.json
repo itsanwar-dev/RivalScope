@@ -2,7 +2,7 @@
   "name": "rivalscope",
   "version": "0.1.0",
   "private": true,
-  "description": "RivalScope development starter",
+  "description": "Evidence-based competitor research for media buyers",
   "type": "module",
   "engines": {
     "node": ">=24.19.0 <25",
@@ -20,5 +20,8 @@
   "devDependencies": {
     "@types/node": "24.19.2",
     "typescript": "7.0.2"
+  },
+  "dependencies": {
+    "cheerio": "1.2.0"
   }
 }

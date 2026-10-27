@@ -26,7 +26,7 @@ test('root identifies the starter and accepts query strings', async (t) => {
   const base = await withServer(t);
   const response = await fetch(`${base}/?check=1`);
   assert.equal(response.status, 200);
-  assert.deepEqual(await response.json(), { name: 'RivalScope', status: 'starter' });
+  assert.deepEqual(await response.json(), { name: 'RivalScope', status: 'research-api', capabilities: '/api/capabilities' });
 });
 
 test('unknown paths return 404', async (t) => {
